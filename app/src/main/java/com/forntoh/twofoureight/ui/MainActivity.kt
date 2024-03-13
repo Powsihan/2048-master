@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import com.forntoh.twofoureight.store.PreferenceRepository
+import kotlinx.coroutines.*
 
 class MainActivity : ComponentActivity() {
 
@@ -18,7 +19,14 @@ class MainActivity : ComponentActivity() {
         preferenceRepository.useSystemUiMode = true
 
         setContent {
-            GameApp()
+            LoadingScreen()
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(2000) // 2000 milliseconds = 2 seconds
+            setContent {
+                GameApp()
+            }
         }
     }
 
